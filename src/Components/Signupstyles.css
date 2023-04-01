@@ -1,0 +1,27 @@
+.main-signup{
+    position: relative;
+}
+.signup{
+    width: 20%;
+    height: 600px;
+   border: 1px solid black;
+     position: absolute;
+     right: 30%;
+     top: 200px;
+}
+.signup input{
+    border: 1px solid black;
+    width: 90%;
+    height: 30px;
+    border-radius: 5px;
+}
+img{
+    width: 30%;
+    position: absolute;
+    left: 20%;
+    top: 200px;
+    height: 600px;
+}
+span{
+    color: blueviolet;
+}
