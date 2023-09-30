@@ -8,6 +8,7 @@ function AddBike(){
        const[brand,setBrand]=useState("");
        const[model,setModel]=useState("");
        const[price,setPrice]=useState("");
+       const[status,setStatus]=useState("");
        const[picture,setPicture]=useState({myFile:"",bikeImg:null});
     
        function handleClick(e){
@@ -17,12 +18,14 @@ function AddBike(){
         formData.append('formData', JSON.stringify({
           brand,
           model,
-          price
+          price,
+          status
           
       }))
       axios.post("http://localhost:5000/addbike", formData, {
           }).then(res => {
               console.log(res)
+              alert("bike added succesfully")
           })
         // fetch("http://localhost:5000/addbike",{
         //     method:"POST",
@@ -87,6 +90,16 @@ function AddBike(){
           }} />
         </Col>
       </Form.Group> 
+      <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+        <Form.Label column sm="1">
+        Status
+        </Form.Label>
+        <Col sm="3">
+          <Form.Control type="text" placeholder="Enter Status" name="status" onChange={(e)=>{
+                  setStatus(e.target.value);
+          }} />
+        </Col>
+      </Form.Group>
       {/* <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
         <Form.Label column sm="1">
           Availability

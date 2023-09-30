@@ -7,8 +7,9 @@ function Navbar(){
     const [hide,setHide]=useState("menu");
         return(
             <div>
+            <meta name="viewport" content="width=device-width, initial-scale=1.o" />
                 <nav className="navbar">
-                    <h1>Title</h1>
+                    <h1>Nearme Bikes</h1>
                     <div className="menu-icons">
                     {icon?<i onClick={()=>{
                         setIcon(false)

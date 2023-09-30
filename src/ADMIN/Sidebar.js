@@ -21,6 +21,10 @@ function Sidebar(){
                 <i className="bi bi-house fs-4 me-3"></i>
                 <span className="fs-5">View Bikes</span>
                </a>
+               {/* <a className="list-group-item py-2" href="/bikeupdate">
+                <i className="bi bi-house fs-4 me-3"></i>
+                <span className="fs-5">Update Bikes</span>
+               </a> */}
                <a className="list-group-item py-2" href="/viewuser">
                 <i className="bi bi-house fs-4 me-3"></i>
                 <span className="fs-5">Available Users</span>

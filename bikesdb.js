@@ -9,6 +9,9 @@ const BikesSchema=new mongoose.Schema({
     price:{
         type:Number
     },
+    status:{
+        type:String
+    },
     picture:{
         // data:Buffer,
         // contentType:String

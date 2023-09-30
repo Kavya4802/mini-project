@@ -1,7 +1,12 @@
 import React,{useState} from "react";
 import {Row,Col,Form,Input} from 'antd';
 import {Link} from 'react-router-dom';
+import "./register.css";
+import Navbar from "./Navbar";
+import { useParams } from "react-router-dom";
+import Footer from "./Footer";
 function Register(){
+    const {id}=useParams();
     const [name,setName]=useState(" ");
     const [email,setEmail]=useState(" ");
     const [pwd,setPwd]=useState(" ");
@@ -9,9 +14,8 @@ function Register(){
     const [add,setAdd]=useState(" ");
     const [city,setCity]=useState(" ");
     const [pincode,setPin]=useState(" ");
-    const [aadhar,setAadhar]=useState();
-    const [license,setLicense]=useState();
     function handleClick(e){
+        
         e.preventDefault();
         fetch("http://localhost:5000/register",{
             method:"POST",
@@ -28,22 +32,27 @@ function Register(){
                 no,
                 add,
                 city,
-                pincode,
-                aadhar,
-                license
+                pincode
             }),
         }).then((res)=>res.json())
         .then((data)=>{
-            alert("registered succesfully");
-             console.log(data,"UserRegister");
+            if(data.status==="ok"){
+                alert("registered succesfully");
+                window.location.href=`/payment/${id}` ;
+            }
+           else{
+              alert("Email already exists");
+           }
         })
     }
     return(
-        <div className="login">
+        <>
+        <Navbar></Navbar>
+        <div className="signup">
            <Row gutter={16}>
             <Col lg={16} style={{position:'relative'}}>
-             {/* <img src="https://images.unsplash.com/photo-1656420731047-3eb41c9d1dee?ixlib=rb-4.0.3&i
-             xid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80" alt=""></img> */}
+             { <img src="https://images.unsplash.com/photo-1656420731047-3eb41c9d1dee?ixlib=rb-4.0.3&i
+             xid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80" alt=""></img> }
             </Col>
             <Col lg={8} className='text-left p-45'>
                 <Form layout='vertical' className="login-form p-5">
@@ -62,7 +71,7 @@ function Register(){
                     <Form.Item name='password' label='Password' rules={[{required:true}]} onChange={(e)=>{
                         setPwd(e.target.value);
              }}>
-                        <input type="password"></input>
+                        <Input type="password"></Input>
                     </Form.Item>
                 <Form.Item name='no' label='Number' rules={[{required:true}]} onChange={(e)=>{
                         setNo(e.target.value);
@@ -84,26 +93,17 @@ function Register(){
              }}>
                         <Input></Input>
                     </Form.Item>
-                    <Form.Item name='aadhar' label='Aadhar' rules={[{required:true}]} onChange={(e)=>{
-                        setAadhar(e.target.value);
-             }}>
-                    <input type="file"></input>
-                    </Form.Item>
-                    <Form.Item name='license' label='License' rules={[{required:true}]} onChange={(e)=>{
-                        setLicense(e.target.value);
-             }}>
-                    <input type="file"></input>
-                    </Form.Item>
-                      
-                    <button className="btn1" onClick={handleClick}>Submit</button>
+                  <button className="btn1" onClick={handleClick}>Submit</button>
                     <br></br>
                     <br></br>
-                    <p style={{color:"white"}}>Already registered?<span><Link to="/login">Login</Link></span></p>
+                    <p style={{color:"white"}}>Already registered?<span><Link to={`/login/${id}`}>Login</Link></span></p>
                 </Form>
             </Col>
            </Row>
           
         </div>
+        <Footer></Footer>
+        </>
     )
 }
 export default Register;
