@@ -11,12 +11,16 @@ import Payment from "./Pages/Payment";
 import Terms from "./Pages/Termsofservice";
 import Privacy from "./Pages/Privacypolicy";
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import Cart from "./Pages/Cart";
+import PasswordReset from "./Pages/PasswordReset";
+import ForgotPassword from "./ForgotPassword";
 function App(){
     return(
         <div className="App">
-          {/* <Dashboard></Dashboard> */}
+        {/* <Dashboard></Dashboard> */}
             <Router>
               <Routes>
+              
               <Route path="/" exact element={<Home/>}></Route>
               <Route path="/about" exact element={<About/>}></Route>
               <Route path="/login/:id" element={<Login/>}></Route>
@@ -28,6 +32,9 @@ function App(){
               <Route path="/payment/:id" element={<Payment/>}></Route>
               <Route path="/terms" element={<Terms/>}></Route>
               <Route path="/privacypolicy" element={<Privacy/>}></Route>
+              <Route path="/cart" element={<Cart></Cart>} />
+              <Route path="/password-reset" element={<PasswordReset/>}></Route>
+              <Route path="/forgotpassword/:id/:tokens" element={<ForgotPassword/>}></Route>
               {/* <Route path="/ADMIN/Dashboard" element={<Dashboard/>}></Route> */}
               </Routes>
             </Router> 

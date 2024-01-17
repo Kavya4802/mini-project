@@ -1,11 +1,4 @@
-// const mongoose=require("mongoose");
-// mongoose.connect("mongodb+srv://Kavya:Mydatabase@cluster0.ikviqqi.mongodb.net/BikesDB",{useUnifiedTopology:true,useNewUrlPArser:true}).then(()=>{
-//     console.log("mongodb connected");
-//     })
-// .catch(()=>{
-//     console.log("error connecting mongodb");
-//     })
-// module.exports=mongoose;
+
 const mongoose=require("mongoose");
 const UserSchema=new mongoose.Schema({
     name:String,
@@ -18,7 +11,19 @@ const UserSchema=new mongoose.Schema({
     add:String,
     city:String,
     pincode:Number,
-    aadhar:Buffer,
-    license:Buffer
-});
-const Details=mongoose.model("Userdetails",UserSchema);
+    verifytoken:String,
+    cart: [
+      {
+        bikeId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Bike", // assuming you have a Bike model
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          default: 1, // default quantity is 1
+        },
+      },
+    ],
+  });
+const Details=mongoose.model("Userdetails",UserSchema); 

@@ -85,3 +85,18 @@ li{
         cursor: pointer;
      }
 }
+.cart-badge {
+    position: relative;
+    top: -10px;
+    left: 1px;
+    background-color: #ff0000; 
+    color: #ffffff; 
+    border-radius: 50%;
+    padding: 2px 4px;
+    font-size: 12px; 
+  }
+  .cart-badge:hover {
+    cursor: pointer;
+    background-color: #cc0000;
+  }
+  

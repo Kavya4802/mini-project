@@ -70,7 +70,8 @@ function Login(){
                     </Form.Item>    
                     <button className="btn1" onClick={handleClick}>Login</button>
                     <br></br>
-                    <p style={{color:"white"}}>Cant Login? Try-<span><Link to="/register">Signup</Link></span></p>
+                    <p style={{color:"white"}}>Don't have a account?  <span><Link to="/register">Signup</Link></span></p>
+                    <p style={{color:"white", fontWeight:"bold"}}>Forgot Password <span><Link to="/password-reset">click here</Link></span></p>
                 </Form>
             </Col>
            </Row>
