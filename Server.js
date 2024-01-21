@@ -57,6 +57,28 @@ app.post("/razorpay", async (req, res) => {
     console.log(error);
   }
 });
+const TransactionDB = require('./transactiondb');
+app.post('/save-transaction', async (req, res) => {
+  console.log("hello");
+  try {
+    const { orderId, paymentId } = req.body;
+    console.log(orderId);
+    console.log(paymentId);
+    const transaction = new TransactionDB({
+      orderId,
+      paymentId
+    });
+
+    const savedTransaction = await transaction.save();
+    console.log('Transaction saved:', savedTransaction);
+
+    res.json({ success: true, message: 'Transaction saved successfully.' });
+  } catch (error) {
+    console.error('Error saving transaction:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
 const Details = mongoose.model("Userdetails");
 app.use("/images", express.static(__dirname + "/uploads"));
 
@@ -133,19 +155,35 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, pwd } = req.body;
   const user = await Details.findOne({ email });
+
   if (!user) {
     return res.json({ error: "User not found" });
   }
+
   if (await bcrypt.compare(pwd, user.pwd)) {
     const token = jwt.sign({ email: user.email }, JWT_SECRET);
+
+    // Check if the user has admin privileges based on certain criteria
+    const isAdmin = checkAdminCriteria(user);
+
     if (res.status(201)) {
-      return res.json({ status: "ok", data: token });
+      return res.json({ status: "ok", data: token, role: isAdmin ? "admin" : "user" });
     } else {
       return res.json({ error: "error" });
     }
   }
+
   res.json({ status: "error", error: "Invalid Password" });
 });
+
+
+function checkAdminCriteria(user) {
+  // Implement your criteria for identifying admin users
+  // For example, you might check if the email is associated with an admin account
+  return user.email === "satwikatyam@gmail.com";
+}
+
+
 const Bike = require("./bikesdb");
 // const upload=require("./middleware/multer")
 /*

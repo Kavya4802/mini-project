@@ -5,43 +5,48 @@ import "./Loginstyles.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useParams } from "react-router-dom";
-function Login(){
-    const {id}=useParams();
-    const [email,setEmail]=useState(" ");
-    const [pwd,setPwd]=useState(" ");
-    function handleClick(e){
+function Login() {
+    const { id } = useParams();
+    const [email, setEmail] = useState("");
+    const [pwd, setPwd] = useState("");
+  
+    function handleClick(e) {
         e.preventDefault();
-        fetch("http://localhost:5000/login",{
-            method:"POST",
-            crossDomain:true,
-            headers:{
-                "Content-Type":"application/json",
-                Accept:"application/json",
-                "Access-control-Allow-Origin":"*"
-            },
-            body:JSON.stringify({
-                email,
-                pwd,
-            }),
-        }).then((res)=>res.json())
-        .then((data)=>{
-             console.log(data,"userRegister");
-             if(data.status==="ok"){
-                if(id==="undefined"){
-                    alert("login succesful");
-                    window.localStorage.setItem("token",data.data);
-                    window.location.href='/'
-                }
-                else{
-                    alert("login succesful");
-                    window.localStorage.setItem("token",data.data);
-                    window.location.href=`/payment/${id}`
-                }
+        fetch("http://localhost:5000/login", {
+          method: "POST",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            email,
+            pwd,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "userRegister");
+            if (data.status === "ok") {
+              alert("Login successful");
+      
+              // Check user role and redirect accordingly
+              if (data.role === "admin") {
+                window.localStorage.setItem("token", data.data);
+                window.location.href = '/AppRoutes';
+              } else {
+                window.localStorage.setItem("token", data.data);
+      
+                // If 'id' is defined, redirect to the home page; otherwise, redirect to '/'
+                window.location.href = id !== "undefined" ? '/home' : '/';
               }
-             else{
-                alert("Invalid Username or Password");
-             }
+            } else {
+              alert("Invalid Username or Password");
+            }
           });
+      
+      
     }
     return(
         <>

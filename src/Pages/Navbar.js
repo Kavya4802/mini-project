@@ -1,43 +1,17 @@
-import React, { useState } from "react";
-import Menuitems from "./MenuItems";
-import "./Navbarstyles.css";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import DropDown from "../Components/DropDown";
-function Navbar({userc}) {
+import "./Navbarstyles.css";
+import Menuitems from "./MenuItems";
+
+function Navbar({ userc }) {
   const [icon, setIcon] = useState(false);
   const [hide, setHide] = useState("menu");
   const [user, setUser] = useState(null);
   const [openProfile, setOpenProfile] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCartCount = async () => {
-      try {
-        // Make an API request to get the user's cart count
-        const response = await fetch(`http://localhost:5000/getcartcount/${user.email}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the user's token
-          },
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          setCartCount(data.cartCount);
-          
-        } else {
-          console.error("Error fetching cart count");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    // Fetch cart count when the component mounts
-    fetchCartCount();
-  }, [user]); // Add user to the dependency array
-  
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -51,7 +25,6 @@ function Navbar({userc}) {
         .then((data) => {
           if (data.status === "ok") {
             setUser(data.user);
-            
           } else {
             console.log("Error fetching user details");
           }
@@ -59,17 +32,45 @@ function Navbar({userc}) {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      setUser(null);
     }
-  }, []);
+  }, [userc]);
+
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      try {
+        if (user) {
+          const response = await fetch(`http://localhost:5000/getcartcount/${user.email}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setCartCount(data.cartCount);
+          } else {
+            console.error("Error fetching cart count");
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCartCount();
+  }, [user]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
     setCartCount(0);
     setOpenProfile(false);
+
+    navigate("/");
   };
-  //  function printCartCount(){
-  //   console.log("naa cart lo:",cartCount);
-  //  }
+
   return (
     <div>
       <meta name="viewport" content="width=device-width, initial-scale=1.o" />
@@ -95,6 +96,7 @@ function Navbar({userc}) {
           )}
         </div>
         <ul className={hide}>
+          {/* Menu items */}
           {Menuitems.map((items, index) => (
             <li key={index}>
               {items.title === "Signup" && user ? (
@@ -113,11 +115,12 @@ function Navbar({userc}) {
               )}
             </li>
           ))}
+          {/* Cart icon */}
           <li>
-          <Link to="/cart" style={{textDecoration:"none"}}>
+            <Link to="/cart" style={{ textDecoration: "none" }}>
               <div>
                 <i className="fas fa-shopping-cart"></i>
-               <span className="cart-badge">{cartCount}</span>
+                <span className="cart-badge">{cartCount}</span>
               </div>
             </Link>
           </li>
@@ -128,16 +131,5 @@ function Navbar({userc}) {
     </div>
   );
 }
+
 export default Navbar;
- 
-  // return (
-  //   <div>
-  //     <h1>{user.email}</h1>
-  //     {cartItems.map((item) => (
-  //       <div key={item.id}>
-  //         <p>{item.name}</p>
-  //         {/* Add more details about the item */}
-  //       </div>
-  //     ))}
-  //   </div>
-  // );

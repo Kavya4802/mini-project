@@ -1,12 +1,15 @@
 // Payment.js
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import "./Paymentstyles.css";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import { useParams } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
+
+
 const Payment = () => {
+  
  async function displayRazorPay(){
      const data=await fetch("http://localhost:5000/razorpay",{
       method:"POST"
@@ -44,7 +47,7 @@ const Payment = () => {
     document.body.appendChild(script)
     })
   }
-  const [startDate, setStartDate] = useState(new Date());
+  // const [startDate, setStartDate] = useState(new Date());
   const { id } = useParams();
   const [bikeData, setBikeData] = useState([]);
     useEffect(()=>{
@@ -77,6 +80,7 @@ const Payment = () => {
         <h3>{bikeData.price}</h3>
         <button className="paynow-button" onClick={displayRazorPay}>Pay Now</button>
       </div>
+      
       {/* <DatePicker
       selected={startDate}
       onChange={(date) => setStartDate(date)} 
