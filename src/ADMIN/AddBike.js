@@ -4,6 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Navbar from '../Pages/Navbar';
+import "./Styles.css";
+import Sidebar from './Sidebar';
 function AddBike(){
        const[brand,setBrand]=useState("");
        const[model,setModel]=useState("");
@@ -55,10 +58,22 @@ function AddBike(){
              setPicture({myFile:base64,bikeImg:e.target.files[0]})
         }
     return(
-        <div>
+     <>
+      <div className="row">
+          <div className="col-2 bg-white vh-100">
+            <Sidebar></Sidebar>
+          </div>
+          <div className="col">
+          <div className="hero">
+       <img
+          src="https://images.unsplash.com/photo-1609778269131-b86133da88bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MH
+            xwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          alt="bike-img"
+        ></img>
+        <div className="hero-text">
         <h3>Add Bikes here</h3>
         <br></br>
-           <Form>
+           <Form className="custom-form">
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
         <Form.Label column sm="1">
           Brand
@@ -66,7 +81,7 @@ function AddBike(){
         <Col sm="3">
           <Form.Control type="text" placeholder='Enter Bike Brand' name="brand" onChange={(e)=>{
                   setBrand(e.target.value);
-          }} />
+          }} style={{ width: "250px" }} />
         </Col>
       </Form.Group>
 
@@ -77,7 +92,7 @@ function AddBike(){
         <Col sm="3">
           <Form.Control type="text" placeholder="Enter Bike Model" name="model" onChange={(e)=>{
                   setModel(e.target.value);
-          }} />
+          }} style={{ width: "250px" }} />
         </Col>
       </Form.Group>
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -87,7 +102,7 @@ function AddBike(){
         <Col sm="3">
           <Form.Control type="text" placeholder="Enter Bike Rent" name="price" onChange={(e)=>{
                   setPrice(e.target.value);
-          }} />
+          }} style={{ width: "250px" }} />
         </Col>
       </Form.Group> 
       <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -97,7 +112,7 @@ function AddBike(){
         <Col sm="3">
           <Form.Control type="text" placeholder="Enter Status" name="status" onChange={(e)=>{
                   setStatus(e.target.value);
-          }} />
+          }} style={{ width: "250px" }} />
         </Col>
       </Form.Group>
       {/* <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
@@ -119,14 +134,16 @@ function AddBike(){
         </Form.Label>
         <Col sm="3">
         <input type="file" onChange={handleFileUpload} />
-        {/* <Form.Control type="file" name="picture" enctype="multipart/form-data" onChange={(e)=>{
-                  handleFileUpload(e);
-        }}/> */}
         </Col>
       </Form.Group>
     </Form>
     <Button variant="dark" onClick={handleClick}>Submit</Button>
         </div>
+        </div>
+          </div>
+        </div>
+      
+        </>
     )
 }
 export default AddBike;

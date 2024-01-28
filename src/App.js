@@ -14,8 +14,11 @@ import Privacy from "./Pages/Privacypolicy";
 import Cart from "./Pages/Cart";
 import PasswordReset from "./Pages/PasswordReset";
 import ForgotPassword from "./ForgotPassword";
-
-
+import Dashboard from "./ADMIN/Dashboard";
+import AddBike from "./ADMIN/AddBike";
+import ViewBike from "./ADMIN/ViewBike";
+import ViewUsers from "./ADMIN/ViewUsers";
+import Update from "./ADMIN/Update";
 function App() {
   return (
     <Router>
@@ -36,6 +39,11 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/password-reset" element={<PasswordReset />} />
         <Route path="/forgotpassword/:id/:tokens" element={<ForgotPassword />}/>
+        <Route path="/Dashboard" element={<Dashboard />}/>
+        <Route path="/addbike" element={<AddBike />}/>
+        <Route path="/viewbike" element={<ViewBike />}/>
+        <Route path="/viewuser" element={<ViewUsers />}/>
+        <Route path="/bikeupdate/:bikeId" element={<Update/>}/>
         <Route path="/AppRoutes/*" element={<AppRoutes />} />
 
       </Routes>

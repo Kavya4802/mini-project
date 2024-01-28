@@ -24,7 +24,23 @@ function Cards({ user }) {
         console.log(error);
       });
   }, []);
-
+  const BookNowClick = (bikeId) => {
+    try {
+      if (!user) {
+        // If not logged in, redirect to the login page
+        navigate("/login", { state: { source: "bookNow" } });
+  
+        // Save the current path to local storage
+        localStorage.setItem("redirectPath", `/payment/${bikeId}`);
+      } else {
+        // If logged in, redirect to the payment page
+        navigate(`/payment/${bikeId}`);
+      }
+    } catch (error) {
+      console.error("Error navigating:", error);
+    }
+  };
+  
   const addToCart = async (bikeId) => {
     try {
       if (!user) {
@@ -48,8 +64,8 @@ function Cards({ user }) {
         setCartCount(cartCount + 1);
         alert("Added to cart successfully");
 
-        // Redirect to the payment page
-        navigate(`/payment/${bikeId}`);
+        // // Redirect to the payment page
+        // navigate(`/`);
       } else {
         alert("Sorry! Couldn't add to cart");
         const errorData = await response.json();
@@ -85,7 +101,7 @@ function Cards({ user }) {
                   </pre>
                   {bike.price}{" "}
                 </Card.Text>
-                <Button variant="primary" onClick={() => addToCart(bike._id)}>Book Now</Button>
+                <Button variant="primary" onClick={()=>BookNowClick(bike._id)}>Book Now</Button>
                 <Button
                   variant="primary"
                   style={{ marginLeft: "30px" }}

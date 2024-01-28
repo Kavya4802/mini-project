@@ -5,7 +5,9 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 function Update() {
+  const { bikeId } = useParams();
   const [bikes, setBikes] = useState([]);
   useEffect(() => {
     fetch("http://localhost:5000/getbikes")
@@ -42,19 +44,28 @@ function Update() {
       picture: e.target.files[0],
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("brand", bike.brand);
-    formData.append("model", bike.model);
-    formData.append("price", bike.price);
-    formData.append("picture", bike.picture);
-      
-        axios 
-          .put(`http://localhost:5000/bikesinfo/${bikes[0]._id}`, formData)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+    try {
+      const formData = new FormData();
+      formData.append("brand", bike.brand);
+      formData.append("model", bike.model);
+      formData.append("price", bike.price);
+      formData.append("picture", bike.picture);
+  
+      const response = await axios.put(
+        `http://localhost:5000/bikesinfo/${bikeId}`,
+        formData
+      );
+        if (!response.data.error) {
+        alert("Bike updated successfully!");
+      } else {
+        alert("Error updating bike");
       }
+    } catch (error) {
+      console.error("Error updating bike:", error);
+    }
+  }
     return (
       <div>
         <h3>Update Bikes here</h3>

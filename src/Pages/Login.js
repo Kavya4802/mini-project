@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import {Row,Col,Form,Input} from 'antd';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
+import { useLocation } from 'react-router';
 import "./Loginstyles.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -9,44 +10,54 @@ function Login() {
     const { id } = useParams();
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
-  
+    const navigate = useNavigate();
+    const location = useLocation();
     function handleClick(e) {
-        e.preventDefault();
-        fetch("http://localhost:5000/login", {
-          method: "POST",
-          crossDomain: true,
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            email,
-            pwd,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data, "userRegister");
-            if (data.status === "ok") {
-              alert("Login successful");
-      
-              // Check user role and redirect accordingly
-              if (data.role === "admin") {
-                window.localStorage.setItem("token", data.data);
-                window.location.href = '/AppRoutes';
-              } else {
-                window.localStorage.setItem("token", data.data);
-      
-                // If 'id' is defined, redirect to the home page; otherwise, redirect to '/'
-                window.location.href = id !== "undefined" ? '/home' : '/';
-              }
+      e.preventDefault();
+      const source = location.state ? location.state.source : "navbar";
+  
+      fetch("http://localhost:5000/login", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          email,
+          pwd,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "userRegister");
+          if (data.status === "ok") {
+            alert("Login successful");
+  
+            if (data.role === "admin") {
+              window.localStorage.setItem("token", data.data);
+              navigate('/Dashboard');
+              window.localStorage.removeItem("token");
             } else {
-              alert("Invalid Username or Password");
+              window.localStorage.setItem("token", data.data);
+  
+              if (source === "bookNow") {
+                const redirectPath = localStorage.getItem("redirectPath");
+                if (redirectPath) {
+                  localStorage.removeItem("redirectPath");
+                navigate(redirectPath);
+                } else {
+                navigate(`/payment/${id}`);
+                }
+              } else {
+              navigate(id !== "undefined" ? '/' : '/');
+              }
             }
-          });
-      
-      
+          } else {
+            alert("Invalid Username or Password");
+          }
+        });
     }
     return(
         <>

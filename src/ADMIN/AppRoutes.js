@@ -12,10 +12,10 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Dashboard />}>
           {/* <Route path="content" element={<Content />} /> */}
-          <Route path="addbike" element={<AddBike />} />
-          <Route path="viewbike" element={<ViewBike />} />
-          <Route path="bikeupdate" element={<Update />} />
-          <Route path="viewuser" element={<ViewUsers />} />
+          <Route path="/addbike" element={<AddBike />} />
+          <Route path="/viewbike" element={<ViewBike />} />
+          <Route path="/bikeupdate/:id" element={<Update />} />
+          <Route path="/viewuser" element={<ViewUsers />} />
         </Route>
       </Routes>
     );

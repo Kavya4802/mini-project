@@ -1,7 +1,10 @@
 import "./viewbike.css";
 import { useState, useEffect } from "react";
+import { useNavigate , Link} from "react-router-dom";
 function ViewBike() {
+  const navigate=useNavigate();
   const [bikes, setBikes] = useState([]);
+  
   useEffect(() => {
     fetch("http://localhost:5000/getbikes")
       .then((response) => response.json())
@@ -37,35 +40,9 @@ function ViewBike() {
         console.log(error);
       });
   };
-  // const handleUpdate = (id, updatedBike) => {
-  //   fetch(`http://localhost:5000/bikesinfo/${id}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(updatedBike),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.status === "ok") {
-  //         const updatedBikes = bikes.map((bike) => {
-  //           if (bike.id === id) {
-  //             return { ...bike, ...updatedBike };
-  //           } else {
-  //             return bike;
-  //           }
-  //         });
-  //         setBikes(updatedBikes);
-  //         alert("Updated successfully");
-  //       } else {
-  //         alert("Error updating bike");
-  //         console.log("Error updating bike");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  function handleUpdate(id){
+    navigate(`/bikeupdate/${id}`)
+  }
   return (
     <div>
       <h3>Your added bikes</h3>
@@ -93,13 +70,13 @@ function ViewBike() {
                   <td>{bike.price}</td>
                   <td>{bike.status}</td>
                   <td>
-                    <a href="/bikeupdate" className="btn border-shadow update">
+                    <Link to={`/bikeupdate/${bike._id}`} className="btn border-shadow update">
                       <span className="text-gradient">
                         <i className="fas fa-pencil-alt"
-                        // onClick={()=>handleUpdate(bike._id,{price:10})}
+                        onClick={() => handleUpdate(bike.id)}
                         ></i>
                       </span>
-                    </a>
+                    </Link>
                     <a href className="btn border-shadow delete">
                       <span className="text-gradient">
                         <i

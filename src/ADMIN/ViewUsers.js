@@ -1,23 +1,14 @@
-
+import Navbar from "../Pages/Navbar";
 import { useState, useEffect } from "react";
 function ViewUsers() {
   const [users, setusers] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/getusers")
+    // Fetch data from the server when the component mounts
+    fetch("http://localhost:5000/api/transactions")
       .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "ok") {
-          setusers(data.users);
-          console.log(data.users);
-        } else {
-          console.log("Error fetching bikes");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then((data) => setusers(data))
+      .catch((error) => console.error('Error fetching data:', error));
   }, []);
-
   return (
     <div>
       <h3>Users</h3>
@@ -29,29 +20,34 @@ function ViewUsers() {
             <tr>
                 <th>SNO</th>
               <th>NAME</th>
-              <th>EMAIL</th>
+              {/* <th>EMAIL</th> */}
               <th>NUMBER</th>
-              <th>ADDRESS</th>
-              <th>CITY</th>
-              <th>PINCODE</th>
+              <th>ORDER_ID</th>
+              <th>PAYMENT_ID</th>
+              <th>BIKE_ID</th>
+              <th>BIKE_NAME</th>
+              <th>AMOUNT</th>
+              <th>START_DATE/TIME</th>
+              <th>END_DATE/TIME</th>
+              <th>TRANSACTION_DATE</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => {
-              return (
-                <tr key={user.id}>
-                  <td>{index + 1}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.no}</td>
-                  <td>{user.add}</td>
-                  <td>{user.city}</td>
-                  <td>{user.pincode}</td>
-
-                 
-                </tr>
-              );
-            })}
+          {users.map((user, index) => (
+              <tr key={user._id}>
+                <td>{index + 1}</td>
+                <td>{user.userName}</td>
+                <td>{user.phoneNumber}</td>
+                <td>{user.orderId}</td>
+                <td>{user.paymentId}</td>
+                <td>{user.bikeId}</td>
+                <td>{user.bikeName}</td>
+                <td>{user.amount}</td>
+                <td>{user.startDate}</td>
+                <td>{user.endDate}</td>
+                <td>{user.timestamp}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </main>

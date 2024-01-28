@@ -37,17 +37,48 @@ const razorpay = new Razorpay({
   key_id: "rzp_test_6YWgCz8B9XBA7M",
   key_secret: "OC5PdOulwyIg6WtWY1tLARGe",
 });
+const fetchBikeDetails = async (bikeId) => {
+  try {
+    const bikeDetails = await Bike.findById(bikeId); // Assuming you are using mongoose
+
+    // Handle the case where the bike is not found
+    if (!bikeDetails) {
+      return null;
+    }
+
+    // Return the bike details
+    return {
+      price: bikeDetails.price,
+      // Add other bike details as needed
+    };
+  } catch (error) {
+    console.error('Error fetching bike details:', error);
+    throw error; // Throw the error to be caught in the calling function
+  }
+};
 app.post("/razorpay", async (req, res) => {
   const payment_capture = 1;
-  var options = {
-    amount: 1000 * 100, // amount in the smallest currency unit
-    currency: "INR",
-    receipt: shortid.generate(),
-    payment_capture,
-  };
+  const bikeId = req.body.bikeId; // Assuming you receive bikeId from the frontend
+
   try {
+    // Fetch bike details using bikeId
+    const bikeDetails = await fetchBikeDetails(bikeId);
+
+    if (!bikeDetails) {
+      res.status(404).json({ error: "Bike not found" });
+      return;
+    }
+
+    const options = {
+      amount: req.body.totalPrice * 100, // Set the amount based on the bike price
+      currency: "INR",
+      receipt: shortid.generate(),
+      payment_capture,
+    };
+
     const response = await razorpay.orders.create(options);
     console.log(response);
+
     res.json({
       id: response.id,
       currency: response.currency,
@@ -55,27 +86,46 @@ app.post("/razorpay", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 const TransactionDB = require('./transactiondb');
+const moment = require('moment');
 app.post('/save-transaction', async (req, res) => {
-  console.log("hello");
+  console.log("hellooooooooooooo");
   try {
-    const { orderId, paymentId } = req.body;
-    console.log(orderId);
-    console.log(paymentId);
+    const { orderId, paymentId, userName,amount,phoneNumber,startDate,endDate,bikeId,bikeName } = req.body;
+    // console.log(orderId);
+    // console.log(paymentId);
     const transaction = new TransactionDB({
       orderId,
-      paymentId
+      paymentId,
+      userName,
+      amount,
+      phoneNumber,
+      startDate: moment(startDate).format("DD/MM/YY LT"),
+      endDate: moment(endDate).format("DD/MM/YY LT"),
+      bikeId,
+      bikeName
     });
 
     const savedTransaction = await transaction.save();
-    console.log('Transaction saved:', savedTransaction);
+    // console.log('Transaction saved:', savedTransaction);
 
     res.json({ success: true, message: 'Transaction saved successfully.' });
   } catch (error) {
     console.error('Error saving transaction:', error);
     res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+app.get('/api/transactions', async (req, res) => {
+  try {
+    const transactions = await TransactionDB.find();
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
@@ -264,7 +314,7 @@ app.get("/getusers", async (req, res) => {
         .json({ status: "error", message: "User not found" });
     }
 
-    res.json({ status: "ok", user: { name: user.name, email: user.email } });
+    res.json({ status: "ok", user: { name: user.name, email: user.email, no: user.no, city: user.city} });
   } catch (error) {
     res.status(500).json({ status: "error", message: "Internal Server Error" });
     console.error(error);
@@ -280,28 +330,47 @@ app.get("/bikes/:id", async (req, res) => {
     res.status(500).send("Error retrieving bike data");
   }
 });
-app.put("/bikesinfo/:id", (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({ message: "Data to update cannot be empty" });
-  }
-  console.log(req.body);
+app.put("/bikesinfo/:id", upload.single('picture'), async (req, res) => {
+  console.log("came here");
   const id = req.params.id;
-  Bike.findByIdAndUpdate(id, req.body, { new: true })
-    .then((data) => {
-      if (!data) {
-        res
-          .status(404)
-          .send({
-            message: `Cannot update user with ${id}.Maybe user not found`,
-          });
-      } else {
-        res.send(data);
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({ message: "error update user information" });
-    });
+  try {
+    // Find the existing bike
+    const existingBike = await Bike.findById(id);
+
+    // Construct the update object with only the fields that are provided in the request
+    const updateFields = {};
+    if (req.body.brand) {
+      updateFields.brand = req.body.brand;
+    }
+    if (req.body.model) {
+      updateFields.model = req.body.model;
+    }
+    if (req.body.price) {
+      updateFields.price = req.body.price;
+    }
+    if (req.file) {
+      updateFields.picture = req.file.buffer; // Update picture only if a new file is provided
+    }
+
+    // Merge the existing bike data with the updateFields
+    const updatedBike = { ...existingBike._doc, ...updateFields };
+
+    // Perform the update
+    const updatedData = await Bike.findByIdAndUpdate(id, updatedBike, { new: true });
+
+    if (!updatedData) {
+      res.status(404).send({
+        message: `Cannot update bike with id ${id}. Maybe bike not found`,
+      });
+    } else {
+      res.send(updatedData);
+    }
+  } catch (error) {
+    console.error("Error updating bike:", error);
+    res.status(500).send({ message: "Error updating bike information" });
+  }
 });
+
 app.delete("/bikesinfo/:id", (req, res) => {
   const id = req.params.id;
   Bike.findByIdAndDelete(id)
@@ -623,7 +692,6 @@ app.post("/resetpassword/:id/:tokens",async(req,res) =>{
   const {id,tokens} = req.params;
 
   const {password} = req.body;
-
   try{
       const validUser = await Details.findOne({_id:id,verifytoken:tokens})
           

@@ -11,15 +11,15 @@ function Sidebar() {
       </div>
       <hr className="text-dark"></hr>
       <div className="list-group list-group-flush">
-        <Link to="/content" className="list-group-item py-2">
+        <Link to="/Dashboard" className="list-group-item py-2">
           <i className="bi bi-speedometer2 fs-5 me-3"></i>
           <span className="fs-5">Dashboard</span>
         </Link>
-        <Link to="/AddBike" className="list-group-item py-2">
+        <Link to="/addbike" className="list-group-item py-2">
           <i className="bi bi-house fs-4 me-3"></i>
           <span className="fs-5">Add Bikes</span>
         </Link>
-        <Link to="/ViewBike" className="list-group-item py-2">
+        <Link to="/viewbike" className="list-group-item py-2">
           <i className="bi bi-house fs-4 me-3"></i>
           <span className="fs-5">View Bikes</span>
         </Link>

@@ -3,3 +3,15 @@
     color: white;
     cursor: pointer;
 }
+.custom-form {
+    margin: 20px; /* Adjust the margin as needed */
+  }
+  
+  .custom-form .form-group {
+    margin-bottom: 20px; /* Adjust the margin between form groups as needed */
+  }
+  
+  .custom-form .form-label {
+    font-weight: bold;
+    color: blue;
+  }
