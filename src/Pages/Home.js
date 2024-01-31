@@ -3,11 +3,11 @@ import Navbar from "./Navbar";
 import "./Homestyles.css";
 import Cards from "./Cards";
 // import Hero from "./Hero";
-import Datetime from "react-datetime";
+
 import "react-datetime/css/react-datetime.css";
 import Footer from "./Footer";
 import { useState,useEffect } from "react";
-import BotpressWebchat from "./BotPress";
+
 // import Cart from "./Cart";
 function Home() {
   const [user, setUser] = useState(null);
@@ -49,7 +49,7 @@ function Home() {
         <h4>Our Rental Vehicles</h4>
       </center>
       <Cards user={user} />
-      <BotpressWebchat></BotpressWebchat>
+      {/* <BotpressWebchat></BotpressWebchat> */}
       <Footer></Footer>
     </>
   );

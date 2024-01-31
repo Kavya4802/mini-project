@@ -73,8 +73,13 @@ function Navbar({ userc }) {
 
   return (
     <div>
-      <meta name="viewport" content="width=device-width, initial-scale=1.o" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <nav className="navbar">
+      {/* <img
+          src="https://mvgrglug.com/nearme/wp-content/uploads/2023/04/cropped-cropped-nearme.png"
+          alt="Near Me Icon"
+         
+        /> */}
         <h1>Nearme Bikes</h1>
         <div className="menu-icons">
           {icon ? (

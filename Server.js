@@ -95,13 +95,14 @@ const moment = require('moment');
 app.post('/save-transaction', async (req, res) => {
   console.log("hellooooooooooooo");
   try {
-    const { orderId, paymentId, userName,amount,phoneNumber,startDate,endDate,bikeId,bikeName } = req.body;
+    const { orderId, paymentId, userName,userEmail,amount,phoneNumber,startDate,endDate,bikeId,bikeName } = req.body;
     // console.log(orderId);
     // console.log(paymentId);
     const transaction = new TransactionDB({
       orderId,
       paymentId,
       userName,
+      userEmail,
       amount,
       phoneNumber,
       startDate: moment(startDate).format("DD/MM/YY LT"),
@@ -119,6 +120,18 @@ app.post('/save-transaction', async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 });
+app.get('/get-orders/:userEmail', async (req, res) => {
+  try {
+    
+    const userEmail = req.params.userEmail; 
+    const orders = await TransactionDB.find({ userEmail }).exec();
+    res.status(200).json({ status: 'ok', orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ status: 'error', error: 'Internal Server Error' });
+  }
+});
+
 app.get('/api/transactions', async (req, res) => {
   try {
     const transactions = await TransactionDB.find();
@@ -313,8 +326,7 @@ app.get("/getusers", async (req, res) => {
         .status(404)
         .json({ status: "error", message: "User not found" });
     }
-
-    res.json({ status: "ok", user: { name: user.name, email: user.email, no: user.no, city: user.city} });
+    res.json({ status: "ok", user: { name: user.name, email: user.email, no: user.no, id: user._id} });
   } catch (error) {
     res.status(500).json({ status: "error", message: "Internal Server Error" });
     console.error(error);
@@ -331,7 +343,6 @@ app.get("/bikes/:id", async (req, res) => {
   }
 });
 app.put("/bikesinfo/:id", upload.single('picture'), async (req, res) => {
-  console.log("came here");
   const id = req.params.id;
   try {
     // Find the existing bike

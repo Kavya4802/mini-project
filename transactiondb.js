@@ -14,6 +14,9 @@ const paymentSchema = new mongoose.Schema({
   userName:{
     type: String
   },
+  userEmail: {  // Add userEmail field to store the user's email
+    type: String,
+  },
   amount: {
     type: Number
   },

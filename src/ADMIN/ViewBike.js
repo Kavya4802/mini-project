@@ -44,13 +44,13 @@ function ViewBike() {
     navigate(`/bikeupdate/${id}`)
   }
   return (
-    <div>
+    <div className="viewbike-container">
       <h3>Your added bikes</h3>
       <br></br>
       <br></br>
-      <main className="site-main">
-        <table className="table">
-          <thead className="thead-dark">
+      <main>
+        <table className="viewbike-table">
+          <thead>
             <tr>
               <th>ID</th>
               <th>Brand</th>
@@ -78,9 +78,9 @@ function ViewBike() {
                       </span>
                     </Link>
                     <a href className="btn border-shadow delete">
-                      <span className="text-gradient">
+                      <span >
                         <i
-                          className="fas fa-times"
+                          
                           onClick={() => handleDelete(bike._id)}
                         ></i>
                       </span>

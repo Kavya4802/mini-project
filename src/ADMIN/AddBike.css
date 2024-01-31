@@ -1,0 +1,45 @@
+.addbike-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+  
+  .addbike-sidebar {
+    width: 250px;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  .addbike-form {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .addbike-form-header {
+    margin-bottom: 20px;
+  }
+  
+  .addbike-form-control {
+    width: 250px;
+    margin-bottom: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .addbike-container {
+      flex-direction: column;
+    }
+  
+    .addbike-sidebar {
+      width: 100%;
+    }
+  
+    .addbike-form {
+      padding: 0;
+    }
+  
+    .addbike-form-control {
+      width: 100%;
+    }
+  }
+  

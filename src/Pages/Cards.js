@@ -1,7 +1,8 @@
 // Cards.js
 
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import "./Card.css";
+import {  useNavigate } from "react-router-dom";
 import { Row, Col, Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
@@ -78,50 +79,34 @@ function Cards({ user }) {
 
   return (
     <>
-      <Row md={3}>
-        {bikes.slice(0, 4).map((bike) => (
-          <Col md={3} key={bike._id}>
-            <Card className="card">
-              <Card.Img
-                variant="top"
-                src={`http://localhost:5000/images/${bike.picture}`}
-                className="card-img"
-              />
-              <Card.Body>
-                <Card.Title>{bike.brand}</Card.Title>
-                <Card.Text>
-                  <pre
-                    style={{
-                      display: "inline",
-                      fontSize: "24px",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    ₹
-                  </pre>
-                  {bike.price}{" "}
-                </Card.Text>
-                <Button variant="primary" onClick={()=>BookNowClick(bike._id)}>Book Now</Button>
-                <Button
-                  variant="primary"
-                  style={{ marginLeft: "30px" }}
-                  onClick={() => addToCart(bike._id)}
-                >
-                  Add to cart
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-      <center>
-        <Link to="/allbikes">
-          <Button style={{ marginTop: "15px", marginBottom: "15px" }}>
-            View All
-          </Button>
-        </Link>
-      </center>
-    </>
+      <Row md={3} xs={1}>
+  {bikes.slice(0, 4).map((bike) => (
+    <Col md={3} key={bike._id}>
+      <Card className="card">
+        <Card.Img
+          variant="top"
+          src={`http://localhost:5000/images/${bike.picture}`}
+          className="card-img"
+          alt={bike.brand}
+        />
+        <Card.Body>
+          <div className="card-header">
+            <Card.Title>{bike.brand}</Card.Title>
+            <Card.Text className="card-price">
+              <span className="currency-symbol">₹</span>
+              {bike.price}
+            </Card.Text>
+          </div>
+          <div className="card-buttons">
+            <Button variant="primary" className="book-now-button" onClick={() => BookNowClick(bike._id)}>Book Now</Button>
+            <Button variant="primary" className="add-to-cart" onClick={() => addToCart(bike._id)}>Add to Cart</Button>
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+</>
   );
 }
 

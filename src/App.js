@@ -1,6 +1,8 @@
+// App.js
 import React from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AppRoutes from "./ADMIN/AppRoutes";// Import your admin routes
+import AppRoutes from "./ADMIN/AppRoutes";
 import Home from "./Pages/Home";
 import Navbar from "./Pages/Navbar";
 import About from "./Pages/About";
@@ -19,33 +21,49 @@ import AddBike from "./ADMIN/AddBike";
 import ViewBike from "./ADMIN/ViewBike";
 import ViewUsers from "./ADMIN/ViewUsers";
 import Update from "./ADMIN/Update";
+import Orders from "./Pages/Orders";
+import Wrapper from "./Pages/Wrapper"; // Import the Wrapper component
+
 function App() {
   return (
     <Router>
       <Routes>
-       
-        <Route path="/" element={<Home />} />
-        <Route path="/navbar" element={<Navbar />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login/:id" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/:id" element={<Register />} />
-        <Route path="/bookingbike" element={<BookingBike />} />
-        <Route path="/allbikes" element={<ViewBikes />} />
-        <Route path="/payment/:id" element={<Payment />} />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacypolicy" element={<Privacy />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/password-reset" element={<PasswordReset />} />
-        <Route path="/forgotpassword/:id/:tokens" element={<ForgotPassword />}/>
-        <Route path="/Dashboard" element={<Dashboard />}/>
-        <Route path="/addbike" element={<AddBike />}/>
-        <Route path="/viewbike" element={<ViewBike />}/>
-        <Route path="/viewuser" element={<ViewUsers />}/>
-        <Route path="/bikeupdate/:bikeId" element={<Update/>}/>
+        <Route
+          path="/"
+          element={
+            <Wrapper>
+              <Home />
+            </Wrapper>
+          }
+        />
+        <Route
+          path="/navbar"
+          element={
+            <Wrapper>
+              <Navbar />
+            </Wrapper>
+          }
+        />
+        <Route path="/about" element={<Wrapper><About /></Wrapper>} />
+        <Route path="/login/:id" element={<Wrapper><Login /></Wrapper>} />
+        <Route path="/login" element={<Wrapper><Login /></Wrapper>} />
+        <Route path="/register" element={<Wrapper><Register /></Wrapper>} />
+        <Route path="/register/:id" element={<Wrapper><Register /></Wrapper>} />
+        <Route path="/bookingbike" element={<Wrapper><BookingBike /></Wrapper>} />
+        <Route path="/allbikes" element={<Wrapper><ViewBikes /></Wrapper>} />
+        <Route path="/payment/:id" element={<Wrapper><Payment /></Wrapper>} />
+        <Route path="/terms" element={<Wrapper><Terms /></Wrapper>} />
+        <Route path="/privacypolicy" element={<Wrapper><Privacy /></Wrapper>} />
+        <Route path="/cart" element={<Wrapper><Cart /></Wrapper>} />
+        <Route path="/password-reset" element={<Wrapper><PasswordReset /></Wrapper>} />
+        <Route path="/forgotpassword/:id/:tokens" element={<Wrapper><ForgotPassword /></Wrapper>} />
+        <Route path="/Dashboard" element={<Wrapper><Dashboard /></Wrapper>} />
+        <Route path="/addbike" element={<Wrapper><AddBike /></Wrapper>} />
+        <Route path="/viewbike" element={<Wrapper><ViewBike /></Wrapper>} />
+        <Route path="/viewuser" element={<Wrapper><ViewUsers /></Wrapper>} />
+        <Route path="/bikeupdate/:bikeId" element={<Wrapper><Update /></Wrapper>} />
+        <Route path="/orders/:email" element={<Wrapper><Orders /></Wrapper>} />
         <Route path="/AppRoutes/*" element={<AppRoutes />} />
-
       </Routes>
     </Router>
   );

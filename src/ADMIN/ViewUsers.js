@@ -1,4 +1,4 @@
-import Navbar from "../Pages/Navbar";
+import "./viewUser.css";
 import { useState, useEffect } from "react";
 function ViewUsers() {
   const [users, setusers] = useState([]);
@@ -10,17 +10,16 @@ function ViewUsers() {
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
   return (
-    <div>
+    <div className="viewusers-container">
       <h3>Users</h3>
       <br></br>
       <br></br>
-      <main className="site-main">
-        <table className="table">
-          <thead className="thead-dark">
+      <main className="viewusers-main">
+        <table className="viewusers-table">
+          <thead className="viewusers-thead">
             <tr>
-                <th>SNO</th>
+              <th>SNO</th>
               <th>NAME</th>
-              {/* <th>EMAIL</th> */}
               <th>NUMBER</th>
               <th>ORDER_ID</th>
               <th>PAYMENT_ID</th>
@@ -33,7 +32,7 @@ function ViewUsers() {
             </tr>
           </thead>
           <tbody>
-          {users.map((user, index) => (
+            {users.map((user, index) => (
               <tr key={user._id}>
                 <td>{index + 1}</td>
                 <td>{user.userName}</td>
@@ -53,5 +52,6 @@ function ViewUsers() {
       </main>
     </div>
   );
+  
 }
 export default ViewUsers;

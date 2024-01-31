@@ -7,6 +7,7 @@ import AddBike from "./AddBike";
 import ViewBike from "./ViewBike";
 import Update from "./Update";
 
+
 function AppRoutes() {
     return (
       <Routes>

@@ -1,41 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Styles.css";
+import "./Sidebar.css"
 
 function Sidebar() {
   return (
-    <div className="bg-white sidebar p-2">
-      <div className="m-2">
-        <i className="bi bi-bootstrap-fill me-3 fs-4"></i>
-        <span className="brand-name fs-4">Name</span>
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <i className="sidebar-icon"></i>
+        <span className="sidebar-title">Name</span>
       </div>
-      <hr className="text-dark"></hr>
-      <div className="list-group list-group-flush">
-        <Link to="/Dashboard" className="list-group-item py-2">
-          <i className="bi bi-speedometer2 fs-5 me-3"></i>
-          <span className="fs-5">Dashboard</span>
+      <hr className="sidebar-divider"></hr>
+      <div className="sidebar-links">
+        <Link to="/Dashboard" className="sidebar-link">
+          <i className="sidebar-icon"></i>
+          <span className="sidebar-link-text">Dashboard</span>
         </Link>
-        <Link to="/addbike" className="list-group-item py-2">
-          <i className="bi bi-house fs-4 me-3"></i>
-          <span className="fs-5">Add Bikes</span>
+        <Link to="/addbike" className="sidebar-link">
+          <i className="sidebar-icon"></i>
+          <span className="sidebar-link-text">Add Bikes</span>
         </Link>
-        <Link to="/viewbike" className="list-group-item py-2">
-          <i className="bi bi-house fs-4 me-3"></i>
-          <span className="fs-5">View Bikes</span>
+        <Link to="/viewbike" className="sidebar-link">
+          <i className="sidebar-icon"></i>
+          <span className="sidebar-link-text">View Bikes</span>
         </Link>
-        {/* Add similar Link components for other routes */}
-        <Link to="/viewuser" className="list-group-item py-2">
-        <i className="bi bi-house fs-4 me-3"></i>
-        <span className="fs-5">Available Users</span>
+        <Link to="/viewuser" className="sidebar-link">
+          <i className="sidebar-icon"></i>
+          <span className="sidebar-link-text">Available Users</span>
         </Link>
-
-        <Link to="/" className="list-group-item py-2">
-          <i className="bi bi-house fs-4 me-3"></i>
-          <span className="fs-5">Logout</span>
+        <Link to="/" className="sidebar-link">
+          <i className="sidebar-icon"></i>
+          <span className="sidebar-link-text">Logout</span>
         </Link>
       </div>
     </div>
   );
+  
 }
 
 export default Sidebar;
