@@ -253,7 +253,7 @@ const Payment = () => {
                 Booking by: {user && user.name}
               </Card.Text>
               <Card.Text className="checkout-card-text">
-                Phonenumber: {user && user.no}
+                Email: {user && user.email}
               </Card.Text>
               <Card.Text className="checkout-card-text">
                 Bike Brand: {bikeData.brand}

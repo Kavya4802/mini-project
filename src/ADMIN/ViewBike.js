@@ -1,17 +1,19 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./viewbike.css";
-import { useState, useEffect } from "react";
-import { useNavigate , Link} from "react-router-dom";
+import AdminNavbar from "./AdminNavbar";
+import AdminFooter from "./AdminFooter";
+
 function ViewBike() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [bikes, setBikes] = useState([]);
-  
+
   useEffect(() => {
     fetch("http://localhost:5000/getbikes")
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "ok") {
           setBikes(data.bikes);
-          console.log(data.bikes);
         } else {
           console.log("Error fetching bikes");
         }
@@ -20,6 +22,7 @@ function ViewBike() {
         console.log(error);
       });
   }, []);
+
   const handleDelete = (id) => {
     fetch(`http://localhost:5000/bikesinfo/${id}`, {
       method: "DELETE",
@@ -28,11 +31,11 @@ function ViewBike() {
       .then((data) => {
         if (data.status === "ok") {
           const updatedBikes = bikes.filter((bike) => bike.id !== id);
-          alert("deleted succesully");
+          alert("Deleted successfully");
           setBikes(updatedBikes);
           window.location.reload();
         } else {
-            alert("Error deleting bike")
+          alert("Error deleting bike");
           console.log("Error deleting bike");
         }
       })
@@ -40,59 +43,64 @@ function ViewBike() {
         console.log(error);
       });
   };
-  function handleUpdate(id){
-    navigate(`/bikeupdate/${id}`)
-  }
+
+  const handleUpdate = (id) => {
+    navigate(`/bikeupdate/${id}`);
+  };
+
   return (
-    <div className="viewbike-container">
-      <h3>Your added bikes</h3>
-      <br></br>
-      <br></br>
-      <main>
-        <table className="viewbike-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Brand</th>
-              <th>Model</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bikes.map((bike, index) => {
-              return (
+    <>
+      <AdminNavbar />
+      <div className="viewbikes-table">
+        <br />
+        <br />
+        <main>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bikes.map((bike, index) => (
                 <tr key={bike.id}>
-                  <td>{index + 1}</td>
-                  <td>{bike.brand}</td>
-                  <td>{bike.model}</td>
-                  <td>{bike.price}</td>
-                  <td>{bike.status}</td>
-                  <td>
-                    <Link to={`/bikeupdate/${bike._id}`} className="btn border-shadow update">
-                      <span className="text-gradient">
-                        <i className="fas fa-pencil-alt"
-                        onClick={() => handleUpdate(bike.id)}
-                        ></i>
-                      </span>
+                  <td data-label="ID">{index + 1}</td>
+                  <td data-label="Brand">{bike.brand}</td>
+                  <td data-label="Model">{bike.model}</td>
+                  <td data-label="Price">{bike.price}</td>
+                  <td data-label="Status">{bike.status}</td>
+                  <td data-label="Action">
+                    <Link to={`/bikeupdate/${bike._id}`}>
+                      <button
+                        className="update-button"
+                        onClick={() => handleUpdate(bike._id)}
+                      >
+                        Update
+                      </button>
                     </Link>
-                    <a href className="btn border-shadow delete">
-                      <span >
-                        <i
-                          
-                          onClick={() => handleDelete(bike._id)}
-                        ></i>
-                      </span>
+                    <a href>
+                      <button
+                        className="delete-button"
+                        onClick={() => handleDelete(bike._id)}
+                      >
+                        Delete
+                      </button>
                     </a>
                   </td>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </main>
-    </div>
+              ))}
+            </tbody>
+          </table>
+        </main>
+      </div>
+      <AdminFooter />
+    </>
   );
 }
+
 export default ViewBike;

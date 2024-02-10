@@ -12,6 +12,7 @@ const multer = require("multer");
 const uuidv4 = require("uuid/v4");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 const helmet = require("helmet");
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bodyParser.json());
@@ -93,7 +94,6 @@ app.post("/razorpay", async (req, res) => {
 const TransactionDB = require('./transactiondb');
 const moment = require('moment');
 app.post('/save-transaction', async (req, res) => {
-  console.log("hellooooooooooooo");
   try {
     const { orderId, paymentId, userName,userEmail,amount,phoneNumber,startDate,endDate,bikeId,bikeName } = req.body;
     // console.log(orderId);
@@ -340,6 +340,20 @@ app.get("/bikes/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error retrieving bike data");
+  }
+});
+app.put("/api/updateReturnedStatus/:id", async (req, res) => {
+  try {
+    const transactionId = req.params.id;
+    const { returned } = req.body;
+
+    // Update the returned status in the TransactionDB
+    await TransactionDB.findByIdAndUpdate(transactionId, { returned });
+
+    res.status(200).json({ status: "ok" });
+  } catch (error) {
+    console.error("Error updating returned status:", error);
+    res.status(500).json({ status: "error" });
   }
 });
 app.put("/bikesinfo/:id", upload.single('picture'), async (req, res) => {

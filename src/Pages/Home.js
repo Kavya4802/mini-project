@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import "./Homestyles.css";
 import Cards from "./Cards";
 // import Hero from "./Hero";
-
+import BotPress from "./BotPress";
 import "react-datetime/css/react-datetime.css";
 import Footer from "./Footer";
 import { useState,useEffect } from "react";
@@ -45,11 +45,8 @@ function Home() {
         ></img>
         
       </div>
-      <center>
-        <h4>Our Rental Vehicles</h4>
-      </center>
       <Cards user={user} />
-      {/* <BotpressWebchat></BotpressWebchat> */}
+      {/* <BotPress></BotPress> */}
       <Footer></Footer>
     </>
   );

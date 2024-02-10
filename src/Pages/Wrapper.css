@@ -1,4 +1,11 @@
 .App {
   color: var(--black);
-  background: #ffffff; /* Light gray background */
+  background-color: white;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Muli", sans-serif;
+  min-height: 100vh; /* Set minimum height to 100% of viewport height */
+            display: grid;
+            grid-template-rows: auto 1fr auto; /* Header, main content, footer */
+
 }

@@ -67,7 +67,6 @@ function Navbar({ userc }) {
     setUser(null);
     setCartCount(0);
     setOpenProfile(false);
-
     navigate("/");
   };
 
@@ -80,7 +79,7 @@ function Navbar({ userc }) {
           alt="Near Me Icon"
          
         /> */}
-        <h1>Nearme Bikes</h1>
+        <h3>NEARME BIKES</h3>
         <div className="menu-icons">
           {icon ? (
             <i
@@ -100,6 +99,7 @@ function Navbar({ userc }) {
             ></i>
           )}
         </div>
+        
         <ul className={hide}>
           {/* Menu items */}
           {Menuitems.map((items, index) => (
@@ -130,7 +130,6 @@ function Navbar({ userc }) {
             </Link>
           </li>
         </ul>
-
         {openProfile && <DropDown onLogout={handleLogout} />}
       </nav>
     </div>

@@ -4,9 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import "./AddBike.css";
-import Sidebar from './Sidebar';
+import AdminNavbar from "./AdminNavbar";
+import AdminFooter from './AdminFooter';
 function AddBike(){
        const[brand,setBrand]=useState("");
        const[model,setModel]=useState("");
@@ -58,21 +59,16 @@ function AddBike(){
              setPicture({myFile:base64,bikeImg:e.target.files[0]})
         }
         return (
-          <div className="addbike-container">
-            <div className="addbike-sidebar">
-              <Sidebar></Sidebar>
-            </div>
-            <div className="addbike-form">
-              <div className="addbike-form-header">
-                <h3>Add Bikes here</h3>
-              </div>
-              <Form>
+          <>
+          <AdminNavbar></AdminNavbar>
+          <div className='addbike-form'>
+           <Form>
                 <Form.Group as={Row} controlId="formPlaintextEmail">
-                  <Form.Label column sm="1">
+                  <Form.Label column sm="1" style={{fontSize:"15px"}}>
                     Brand
                   </Form.Label>
                   <Col sm="3">
-                    <Form.Control
+                    <Form.Control  style={{width:"350px",marginLeft:"25px"}}
                       type="text"
                       placeholder="Enter Bike Brand"
                       name="brand"
@@ -85,11 +81,12 @@ function AddBike(){
                 </Form.Group>
         
                 <Form.Group as={Row} controlId="formPlaintextPassword">
-                  <Form.Label column sm="1">
+                  <Form.Label column sm="1" style={{fontSize:"15px"}}>
                     Model
                   </Form.Label>
                   <Col sm="3">
                     <Form.Control
+                    style={{width:"350px",marginLeft:"25px"}}
                       type="text"
                       placeholder="Enter Bike Model"
                       name="model"
@@ -101,11 +98,12 @@ function AddBike(){
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
-                  <Form.Label column sm="1">
+                  <Form.Label column sm="1" style={{fontSize:"15px"}}>
                     Bike Rent
                   </Form.Label>
                   <Col sm="3">
                     <Form.Control
+                    style={{width:"350px",marginLeft:"25px"}}
                       type="text"
                       placeholder="Enter Bike Rent"
                       name="price"
@@ -117,11 +115,12 @@ function AddBike(){
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
-                  <Form.Label column sm="1">
+                  <Form.Label column sm="1" style={{fontSize:"15px"}}>
                     Status
                   </Form.Label>
                   <Col sm="3">
                     <Form.Control
+                    style={{width:"350px",marginLeft:"25px"}}
                       type="text"
                       placeholder="Enter Status"
                       name="status"
@@ -133,11 +132,12 @@ function AddBike(){
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
-                  <Form.Label column sm="1">
+                  <Form.Label column sm="1" style={{fontSize:"14px"}}>
                     Picture
                   </Form.Label>
                   <Col sm="3">
                     <input
+                    style={{width:"350px",marginLeft:"25px"}}
                       type="file"
                       onChange={handleFileUpload}
                       className="addbike-form-control"
@@ -148,8 +148,9 @@ function AddBike(){
               <Button variant="dark" onClick={handleClick}>
                 Submit
               </Button>
-            </div>
-          </div>
+              </div>
+              
+          </>
         );
         
 }

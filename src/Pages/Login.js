@@ -6,6 +6,7 @@ import "./Loginstyles.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useParams } from "react-router-dom";
+import { storeInSession } from "../Session";
 function Login() {
     const { id } = useParams();
     const [email, setEmail] = useState("");
@@ -34,11 +35,11 @@ function Login() {
           console.log(data, "userRegister");
           if (data.status === "ok") {
             alert("Login successful");
-  
+            storeInSession("user",JSON.stringify(data));
             if (data.role === "admin") {
               window.localStorage.setItem("token", data.data);
               navigate('/Dashboard');
-              window.localStorage.removeItem("token");
+              // window.localStorage.removeItem("token");
             } else {
               window.localStorage.setItem("token", data.data);
   

@@ -39,7 +39,11 @@ const paymentSchema = new mongoose.Schema({
   },
   bikeName:{
     type:String
-  }
+  },
+  returned: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const TransactionDB = mongoose.model('Transactions', paymentSchema);

@@ -1,4 +1,7 @@
 /* Define the card */
+*{
+  font-family: "Muli", sans-serif; 
+}
 .card {
     margin-bottom: 20px;
     border: 1px solid #ddd;
@@ -40,6 +43,10 @@
     font-weight: bold;
     margin-right: 5px;
     font-size: 16px;
+  }
+  .card.not-returned {
+    background-color: lightgrey; /* You can customize the background color as needed */
+    /* Add any other styles you want for the not-returned state */
   }
   
   /* Media Query for responsiveness */

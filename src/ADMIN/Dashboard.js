@@ -1,22 +1,13 @@
 import React from "react";
-import Navbar from "../Pages/Navbar";
-import Sidebar from "./Sidebar";
-
-function Dashboard() {
+import AdminNavbar from "./AdminNavbar";
+import "./AdNavstyles.css"
+import AdminFooter from "./AdminFooter";
+function Dashboard () {
   return (
     <>
-      <div >
-        <div >
-          <div >
-            <Sidebar></Sidebar>
-          </div>
-          <div >
-            
-          </div>
-        </div>
-      </div>
-    </>
+       <AdminNavbar></AdminNavbar>
+       <AdminFooter></AdminFooter>
+    </>    
   );
-}
-
+};
 export default Dashboard;

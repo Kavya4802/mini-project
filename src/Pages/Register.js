@@ -5,6 +5,7 @@ import "./register.css";
 import Navbar from "./Navbar";
 import { useParams } from "react-router-dom";
 import Footer from "./Footer";
+import { storeInSession } from "../Session";
 
 
 function Register() {
@@ -40,6 +41,7 @@ function Register() {
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
           }
+          storeInSession("user",JSON.stringify(res));
           return res.json();
         })
         .then((data) => {
