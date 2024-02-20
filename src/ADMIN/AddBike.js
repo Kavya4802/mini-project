@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import "./AddBike.css";
 import AdminNavbar from "./AdminNavbar";
 import AdminFooter from './AdminFooter';
+
 function AddBike(){
        const[brand,setBrand]=useState("");
        const[model,setModel]=useState("");
@@ -59,16 +60,19 @@ function AddBike(){
              setPicture({myFile:base64,bikeImg:e.target.files[0]})
         }
         return (
-          <>
+          <div className='layout-wrapper'>
           <AdminNavbar></AdminNavbar>
+          
           <div className='addbike-form'>
+          <h1 style={{color:"black",alignContent:"left"}}>Add Bikes Here</h1>
            <Form>
                 <Form.Group as={Row} controlId="formPlaintextEmail">
                   <Form.Label column sm="1" style={{fontSize:"15px"}}>
                     Brand
                   </Form.Label>
+                  
                   <Col sm="3">
-                    <Form.Control  style={{width:"350px",marginLeft:"25px"}}
+                    <Form.Control  style={{width:"250px",marginLeft:"27px"}}
                       type="text"
                       placeholder="Enter Bike Brand"
                       name="brand"
@@ -86,7 +90,7 @@ function AddBike(){
                   </Form.Label>
                   <Col sm="3">
                     <Form.Control
-                    style={{width:"350px",marginLeft:"25px"}}
+                    style={{width:"250px",marginLeft:"27px"}}
                       type="text"
                       placeholder="Enter Bike Model"
                       name="model"
@@ -99,11 +103,11 @@ function AddBike(){
                 </Form.Group>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
                   <Form.Label column sm="1" style={{fontSize:"15px"}}>
-                    Bike Rent
+                    Rent
                   </Form.Label>
                   <Col sm="3">
                     <Form.Control
-                    style={{width:"350px",marginLeft:"25px"}}
+                    style={{width:"250px",marginLeft:"27px"}}
                       type="text"
                       placeholder="Enter Bike Rent"
                       name="price"
@@ -116,13 +120,13 @@ function AddBike(){
                 </Form.Group>
                 <Form.Group as={Row} controlId="formPlaintextPassword">
                   <Form.Label column sm="1" style={{fontSize:"15px"}}>
-                    Status
+                    Number
                   </Form.Label>
                   <Col sm="3">
                     <Form.Control
-                    style={{width:"350px",marginLeft:"25px"}}
+                    style={{width:"250px",marginLeft:"27px"}}
                       type="text"
-                      placeholder="Enter Status"
+                      placeholder="Enter Bike Reg Number"
                       name="status"
                       onChange={(e) => {
                         setStatus(e.target.value);
@@ -131,13 +135,14 @@ function AddBike(){
                     />
                   </Col>
                 </Form.Group>
+                
                 <Form.Group as={Row} controlId="formPlaintextPassword">
                   <Form.Label column sm="1" style={{fontSize:"14px"}}>
                     Picture
                   </Form.Label>
                   <Col sm="3">
                     <input
-                    style={{width:"350px",marginLeft:"25px"}}
+                    style={{width:"250px",marginLeft:"27px"}}
                       type="file"
                       onChange={handleFileUpload}
                       className="addbike-form-control"
@@ -149,8 +154,8 @@ function AddBike(){
                 Submit
               </Button>
               </div>
-              
-          </>
+              <AdminFooter></AdminFooter>
+          </div>
         );
         
 }

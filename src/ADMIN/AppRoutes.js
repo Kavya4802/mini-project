@@ -17,6 +17,7 @@ function AppRoutes() {
           <Route path="/viewbike" element={<ViewBike />} />
           <Route path="/bikeupdate/:id" element={<Update />} />
           <Route path="/viewuser" element={<ViewUsers />} />
+          {/* <Route path="/returnstatus" element={<ViewReturns></ViewReturns>} /> */}
         </Route>
       </Routes>
     );

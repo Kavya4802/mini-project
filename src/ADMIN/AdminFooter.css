@@ -17,12 +17,12 @@
   /* Common styles for both large and small screens */
   .Footer {
     padding: 2rem 0;
-    margin-top: 15rem;
     background-color: black;
     color: #fff; /* Set text color to white */
-    width:100%;
-    position:fixed;
-    bottom:0;
+    width:100dvw;
+    bottom: 0;
+    left: 0;
+    position: absolute;
   }
   
   /* Header section styles */
@@ -102,9 +102,19 @@
   /* Media Query for Mobile Devices */
   @media only screen and (max-width: 767px) {
     .Footer{
-    width:100%;
-    position:fixed;
-    bottom:0;
+    width:100dvw;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    z-index: 10000000;
+    left: 0;
+    bottom: 0;
+    }
+    .container{
+      min-height: fit-content;
+      display:flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .nav_ul li {
       padding: 0.6rem;

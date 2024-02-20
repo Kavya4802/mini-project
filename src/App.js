@@ -24,9 +24,8 @@
  import Orders from "./Pages/Orders";
  import Wrapper from "./Pages/Wrapper"; // Import the Wrapper component
 import { lookInSession } from "./Session";
-
- 
- 
+import ViewReturns from "./ADMIN/Return";
+ import ViewHistory from "./ADMIN/ViewHistory";
  function App() {
   const [userAuth,setUserAuth] = useState({});
   const [isValidToken,setValidToken] = useState(false);
@@ -73,6 +72,8 @@ import { lookInSession } from "./Session";
          <Route path="/viewuser" element={<Wrapper><ViewUsers /></Wrapper>} />
          <Route path="/bikeupdate/:bikeId" element={<Wrapper><Update /></Wrapper>} />
          <Route path="/orders/:email" element={<Wrapper><Orders /></Wrapper>} />
+         <Route path="/returnstatus" element={<Wrapper><ViewReturns></ViewReturns></Wrapper>} />
+         <Route path="/userHistory" element={<Wrapper><ViewHistory></ViewHistory></Wrapper>} />
          <Route path="/AppRoutes/*" element={<AppRoutes />} />
        </Routes>
      </Router>

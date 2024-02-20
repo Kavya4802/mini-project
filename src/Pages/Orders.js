@@ -40,7 +40,7 @@ const Orders = () => {
     <div>
       <Navbar />
       <div className="orders-page">
-        <h2>Your Orders</h2>
+        {/* <h2>Your Orders</h2> */}
 
         {orders.length === 0 ? (
           <p className="no-orders-message">No orders found.</p>

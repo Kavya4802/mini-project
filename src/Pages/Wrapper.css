@@ -2,10 +2,20 @@
   color: var(--black);
   background-color: white;
   margin: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   font-family: "Muli", sans-serif;
   min-height: 100vh; /* Set minimum height to 100% of viewport height */
-            display: grid;
-            grid-template-rows: auto 1fr auto; /* Header, main content, footer */
-
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Header, main content, footer */
+  
+  width: 100%;
+  padding: 0;
+          
+}
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box  ;
 }

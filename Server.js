@@ -122,7 +122,6 @@ app.post('/save-transaction', async (req, res) => {
 });
 app.get('/get-orders/:userEmail', async (req, res) => {
   try {
-    
     const userEmail = req.params.userEmail; 
     const orders = await TransactionDB.find({ userEmail }).exec();
     res.status(200).json({ status: 'ok', orders });
@@ -133,6 +132,7 @@ app.get('/get-orders/:userEmail', async (req, res) => {
 });
 
 app.get('/api/transactions', async (req, res) => {
+  console.log(req.body);
   try {
     const transactions = await TransactionDB.find();
     res.json(transactions);
