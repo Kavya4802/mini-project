@@ -109,6 +109,7 @@
     z-index: 10000000;
     left: 0;
     bottom: 0;
+    position: fixed;
     }
     .container{
       min-height: fit-content;

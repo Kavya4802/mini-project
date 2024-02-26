@@ -5,6 +5,7 @@ import "./Card.css";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import Star from "./Star";
 
 function Cards({ user }) {
   const [cartCount, setCartCount] = useState(0);
@@ -19,17 +20,35 @@ function Cards({ user }) {
     try {
       const response = await fetch("http://localhost:5000/getbikes");
       const bikeData = await response.json();
-
+  
       if (bikeData.status === "ok") {
         const transactionsResponse = await fetch("http://localhost:5000/api/transactions");
         const transactions = await transactionsResponse.json();
-
+  
         // Combine bike data with transaction data
         const updatedBikes = bikeData.bikes.map((bike) => {
           const transaction = transactions.find((t) => t.bikeId === bike._id);
-          return { ...bike, returned: transaction ? transaction.returned : true };
+          const userReturned = transaction ? transaction.returned : true;
+  
+          // Check if the current user has an unreturned bike
+            
+          const currentUserTransaction = transactions.find(
+            (t) => {
+              const isMatch = t.userEmail === user.email;
+              console.log(`Comparing ${t.userEmail} with ${user.email}: ${isMatch}`);
+              return isMatch && t.returned === false;
+            }
+          );
+          console.log("asjkkh:", currentUserTransaction);
+          // console.log("iuoghjnvc:",currentUserTransaction.userEmail);
+          return {
+            ...bike,
+            returned: userReturned,
+            blocked: user.email ? user.email === currentUserTransaction?.userEmail : false,
+          };
+       
         });
-
+        // console.log("lkasjshg:",user.email);
         setBikes(updatedBikes);
       } else {
         console.log("Error fetching bikes");
@@ -38,6 +57,7 @@ function Cards({ user }) {
       console.log(error);
     }
   };
+  
 
   const BookNowClick = async (bikeId, returned) => {
     try {
@@ -92,13 +112,12 @@ function Cards({ user }) {
       console.error(error);
     }
   };
-
   return (
     <>
       <Row md={3} xs={1}>
         {bikes.map((bike) => (
-          <Col md={3} key={bike._id} >
-            <Card className={`card ${!bike.returned ? "not-returned" : ""}`}>
+          <Col md={3} key={bike._id}>
+            <Card className={`card ${!bike.returned ? "not-returned" : ""} ${bike.blocked ? "blocked" : ""}`}>
               <Card.Img
                 variant="top"
                 src={`http://localhost:5000/images/${bike.picture}`}
@@ -107,25 +126,29 @@ function Cards({ user }) {
               />
               <Card.Body>
                 <div className="card-header">
-                  <Card.Title style={{fontFamily:"Muli,san-serif"}}>{bike.brand}</Card.Title>
+                  <Card.Title style={{ fontFamily: "Muli, san-serif" }}>{bike.brand}</Card.Title>
                   <Card.Text className="card-price">
                     <span className="currency-symbol">₹</span>
                     {bike.price}
                   </Card.Text>
                 </div>
                 <div className="card-buttons">
-                  
-                    <span>
-                      <Button
-                        variant="primary"
-                        className="book-now-button"
-                        onClick={() => BookNowClick(bike._id, bike.returned)}
-                        disabled={!bike.returned}
-                      >
-                        Book Now
-                      </Button>
-                    </span>
-                  <Button variant="primary" className="add-to-cart" onClick={() => addToCart(bike._id)} disabled={!bike.returned} >
+                  <span>
+                    <Button
+                      variant="primary"
+                      className="book-now-button"
+                      onClick={() => BookNowClick(bike._id, bike.returned)}
+                      disabled={!bike.returned || bike.blocked}
+                    >
+                      Book Now
+                    </Button>
+                  </span>
+                  <Button
+                    variant="primary"
+                    className="add-to-cart"
+                    onClick={() => addToCart(bike._id)}
+                    disabled={!bike.returned || bike.blocked}
+                  >
                     Add to Cart
                   </Button>
                 </div>

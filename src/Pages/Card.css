@@ -48,6 +48,10 @@
     background-color: lightgrey; /* You can customize the background color as needed */
     /* Add any other styles you want for the not-returned state */
   }
+  .card.blocked {
+    opacity: 0.5; /* Adjust the opacity or add other styles to indicate the blocked state */
+    pointer-events: none; /* Disable pointer events for blocked cards */
+  }
   
   /* Media Query for responsiveness */
   @media (max-width: 768px) {
